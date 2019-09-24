@@ -46,7 +46,7 @@ module JekyllPandocMultipleFormats
         # Just return html5
         def convert(content)
           lang  = @config.dig('lang')
-          flags = []
+          flags = ['--metadata pagetitle="pandoc"']
           flags << @config.dig('pandoc', 'flags')
           flags << @config.dig('pandoc', 'site_flags')
           flags << @config.dig('pandoc', 'lang', lang, 'all')
