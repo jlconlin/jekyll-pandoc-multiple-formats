@@ -75,7 +75,16 @@ module JekyllPandocMultipleFormats
       @relative_path ||= Pathname.new(output_file).relative_path_from(Pathname.new(from)).to_s
     end
 
+    def rebuild?
+      !File.exist?(output_file) || File.ctime(original_file) > File.ctime(output_file)
+    end
+
     def write
+      unless rebuild?
+        Jekyll.logger.info "#{output_file} doesn't need to be rebuilt"
+        return true
+      end
+
       # Create the imposed file
       pdflatex = RTeX::Document.new(template)
       pdflatex.to_pdf do |pdf_file|
