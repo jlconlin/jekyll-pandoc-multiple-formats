@@ -100,7 +100,12 @@ module Jekyll
     def url_placeholders
       { output_ext: @format,
         slug: @slug,
-        title: @title }
+        title: @title,
+        collection: collection }
+    end
+
+    def collection
+      posts.first.collection.label
     end
 
     # adds post metadata as yaml metadata
@@ -245,6 +250,12 @@ module Jekyll
     # Returns a PDF cover
     def pdf_cover
       cover.gsub(/\.[^\.]+\Z/, '.pdf')
+    end
+
+    def pdf_contra
+      if single_post? && single_post.data['contra']
+        single_post.data['contra'].gsub(/\.[^\.]+\Z/, '.pdf')
+      end
     end
 
     def pdf_cover!

@@ -32,14 +32,15 @@ module JekyllPandocMultipleFormats
       \\end{document}
       EOT
 
-    INCLUDE_TEMPLATE = '\\includepdf[fitpaper=true,pages=-]{@@document@@}'
+    INCLUDE_TEMPLATE = '\\includepdf[fitpaper=true,pages=@@pages@@]{@@document@@}'
 
     attr_accessor :files, :template
 
-    def initialize(output_file, files)
+    def initialize(output_file, files, pages)
       raise ArgumentError.new 'An array of filenames is required' unless files.is_a? Array
 
       @output_file = output_file
+      @pages = pages
       self.files   = files
 
       render_template
@@ -60,8 +61,8 @@ module JekyllPandocMultipleFormats
     end
 
     def render_template
-      includes = @files.map do |f|
-        INCLUDE_TEMPLATE.gsub(/@@document@@/, f)
+      includes = @files.map.with_index do |f, i|
+        INCLUDE_TEMPLATE.gsub(/@@document@@/, f).gsub(/@@pages@@/, @pages[i] || '-')
       end
 
       @template = TEMPLATE.gsub('@@include@@', includes.join("\n"))

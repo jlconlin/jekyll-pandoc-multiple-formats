@@ -55,6 +55,27 @@ class PandocGenerator < Generator
     @pandoc_files << pandoc_file
   end
 
+  # Add covers to PDFs after building ready for print files
+  def add_cover(pandoc_file)
+    return unless pandoc_file.has_cover?
+    # Generate the cover
+    return unless pandoc_file.pdf_cover!
+
+    united_output = pandoc_file.path.gsub(/\.pdf\Z/, '-cover.pdf')
+    united_file = JekyllPandocMultipleFormats::Unite
+      .new(united_output,
+        [pandoc_file.pdf_cover,pandoc_file.path,pandoc_file.pdf_contra].compact,
+        ['-', pandoc_file.posts.first.data['pages'] || '2-', '-'])
+
+    Jekyll.logger.info pandoc_file.pdf_contra
+
+    return unless united_file.write
+
+    # Replace the original file with the one with cover
+    FileUtils.rm_f(pandoc_file.path)
+    FileUtils.mv(united_output, pandoc_file.path)
+  end
+
   def general_full_for_output(output)
     title = @site.config.dig('title')
     Jekyll.logger.info 'Pandoc:', "Generating full file #{title}"
@@ -85,10 +106,18 @@ class PandocGenerator < Generator
 
     @config.outputs.each_pair do |output, _|
       Jekyll.logger.info 'Pandoc:', "Generating #{output}"
-      @site.posts.docs.each do |post|
-        Jekyll::Hooks.trigger :posts, :pre_render, post, { format: output }
-        generate_post_for_output(post, output) if @config.generate_posts?
-        Jekyll::Hooks.trigger :posts, :post_render, post, { format: output }
+
+      # We only want the collections that are rendered, including posts
+      collections = @site.config['collections'].select do |c,v|
+        v['output'] == true
+      end.keys
+
+      collections.each do |collection|
+        @site.collections[collection].docs.each do |post|
+          Jekyll::Hooks.trigger :posts, :pre_render, post, { format: output }
+          generate_post_for_output(post, output) if @config.generate_posts?
+          Jekyll::Hooks.trigger :posts, :post_render, post, { format: output }
+        end
       end
 
       if @config.generate_categories?
@@ -103,6 +132,11 @@ class PandocGenerator < Generator
     @pandoc_files.each do |pandoc_file|
       # If output is PDF, we also create the imposed PDF
       next unless pandoc_file.pdf?
+
+      cover = @site.config['collections'][pandoc_file.collection]
+        .fetch('cover', 'after')
+
+      add_cover(pandoc_file) if cover == 'before'
 
       if @config.imposition?
 
@@ -125,20 +159,7 @@ class PandocGenerator < Generator
         @site.keep_files << binder_file.relative_path(@site.dest)
       end
 
-      # Add covers to PDFs after building ready for print files
-      if pandoc_file.has_cover?
-        # Generate the cover
-        next unless pandoc_file.pdf_cover!
-        united_output = pandoc_file.path.gsub(/\.pdf\Z/, '-cover.pdf')
-        united_file = JekyllPandocMultipleFormats::Unite
-          .new(united_output, [pandoc_file.pdf_cover,pandoc_file.path])
-
-        if united_file.write
-          # Replace the original file with the one with cover
-          FileUtils.rm_f(pandoc_file.path)
-          FileUtils.mv(united_output, pandoc_file.path)
-        end
-      end
+      add_cover(pandoc_file) if cover == 'after'
     end
   end
 end
