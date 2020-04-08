@@ -36,11 +36,11 @@ module Jekyll
       @last_cat = nil
       @extra = extra
 
-      @single_post = not(posts.is_a? Array)
+      @single_post = !(posts.is_a? Array)
 
       if single_post?
+        @title = title || posts.data['title']
         @posts = [posts]
-        @title = title or posts.data['title']
       else
         @posts = posts
 
@@ -76,7 +76,7 @@ module Jekyll
       # if permalink ends with trailing .html or trailing slash, path now ends with proper suffix
       # for other cases (permalink with no trailing extension or slash), append format
       # (ie /year/month/slug permalink --> /year/month/slug.pdf)
-      if not path.end_with? ".#{@format}"
+      unless path.end_with? ".#{@format}"
         path << '.'
         path << @format
       end
