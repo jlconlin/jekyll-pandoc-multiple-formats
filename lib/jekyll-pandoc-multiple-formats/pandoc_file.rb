@@ -382,9 +382,10 @@ module Jekyll
       @sources = @sources.flatten.compact
     end
 
+    # Only rebuild if the path doesn't exist 
     def rebuild?
       !File.exist?(path) || sources.map do |f|
-        File.ctime(f) > File.ctime(path)
+        File.mtime(f) > File.mtime(path)
       end.any?
     end
 
