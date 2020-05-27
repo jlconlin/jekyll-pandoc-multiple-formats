@@ -25,6 +25,10 @@ module Jekyll
   class PandocFile
     include Convertible
 
+    ALLOWED_YAML_CLASSES = [Array, String, TrueClass, FalseClass,
+                            NilClass, Hash, Integer, Float, Date,
+                            Time, DateTime].freeze
+
     attr_reader :format, :site, :config, :flags, :posts, :slug, :title, :url
     attr_reader :papersize, :sheetsize, :signature, :sources
 
@@ -117,10 +121,18 @@ module Jekyll
         data = Jekyll::Utils.deep_merge_hashes @config, single_post.data
         single_post.merge_data! data
 
-
-        # we extract the excerpt because it serializes as an object and
-        # breaks pandoc
-        metadata = single_post.data.reject{ |k| k == 'excerpt' }
+        # if we dump to YAML any other value pandoc tends to use lots
+        # and lots of RAM
+        metadata = single_post.data.select do |_, v|
+          case v
+          when Array
+            v.all? { |x| ALLOWED_YAML_CLASSES.include? x.class }
+          when Hash
+            v.values.all? { |x| ALLOWED_YAML_CLASSES.include? x.class }
+          else
+            ALLOWED_YAML_CLASSES.include? v.class
+          end
+        end
 
         if @config['date_format']
           metadata['date'] = metadata['date'].strftime(@config['date_format'])
