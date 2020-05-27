@@ -52,7 +52,8 @@ module JekyllPandocMultipleFormats
     }
 
     attr_accessor :output_file, :original_file, :pages, :template,
-      :papersize, :sheetsize, :nup, :extra_options, :relative_path
+      :papersize, :sheetsize, :nup, :extra_options, :relative_path,
+      :tectonic
 
     def initialize(file, papersize = nil, sheetsize = nil, extra_options = nil)
       return unless /\.pdf\Z/ =~ file
@@ -85,13 +86,34 @@ module JekyllPandocMultipleFormats
         return true
       end
 
-      # Create the imposed file
-      pdflatex = RTeX::Document.new(template)
-      pdflatex.to_pdf do |pdf_file|
-        FileUtils.cp pdf_file, @output_file
+      # Create the imposed file.  Using tectonic allows us to have a
+      # minimal LaTeX distribution that can understand unicode
+      # filenames.  Otherwise use RTeX as best effort.
+      if tectonic?
+        Open3::popen2e(tectonic, '-') do |stdin, stdout, thread|
+          stdin.puts template
+          stdin.close
+          STDERR.print stdout.read
+
+          # Wait for the process to finish
+          thread.value
+        end
+
+        FileUtils.mv 'texput.pdf', @output_file
+      else
+        pdflatex = RTeX::Document.new(template)
+        pdflatex.to_pdf do |pdf_file|
+          FileUtils.cp pdf_file, @output_file
+        end
       end
 
       File.exists? @output_file
+    end
+
+    def tectonic?
+      @tectonic ||= '/usr/bin/tectonic'
+
+      File.exists? tectonic
     end
 
     def is_landscape?

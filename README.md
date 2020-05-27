@@ -212,3 +212,11 @@ Alternative, see
 
 Execute `jekyll build` normally :D
 
+## Tectonic
+
+If you want to use Tectonic, make sure it's installed into
+`/usr/bin/tectonic` (or symlink it).  It will be used instead of rtex
+for imposition and adding covers.
+
+It's specially useful if you're using unicode characters in your file
+names.
