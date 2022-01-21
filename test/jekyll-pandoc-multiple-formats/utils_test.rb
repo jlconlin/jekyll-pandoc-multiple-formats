@@ -6,9 +6,9 @@ require 'jekyll-pandoc-multiple-formats/utils'
 class JekyllPandocMultipleFormats::UtilsTest < MiniTest::Test
   context 'I need some utils installed' do
     should 'find anything we need' do
-      assert JekyllPandocMultipleFormats::Utils.pandoc?
-      assert JekyllPandocMultipleFormats::Utils.pdfinfo?
-      assert JekyllPandocMultipleFormats::Utils.tectonic?
+      assert_instance_of TrueClass, JekyllPandocMultipleFormats::Utils.pandoc?
+      assert_instance_of TrueClass, JekyllPandocMultipleFormats::Utils.pdfinfo?
+      assert_instance_of TrueClass, JekyllPandocMultipleFormats::Utils.tectonic?
     end
 
     should "fail if they're missing" do
