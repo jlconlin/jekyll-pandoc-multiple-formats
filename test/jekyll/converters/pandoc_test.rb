@@ -9,7 +9,7 @@ class Jekyll::Converters::PandocTest < MiniTest::Test
       site = fixture_site 'markdown' => 'Pandoc'
 
       converter = site.converters.find do |c|
-        c.class == Jekyll::Converters::Markdown
+        c.instance_of? Jekyll::Converters::Markdown
       end
 
       assert converter.setup
@@ -21,7 +21,7 @@ class Jekyll::Converters::PandocTest < MiniTest::Test
       site = fixture_site 'markdown' => 'Pandoc'
 
       converter = site.converters.find do |c|
-        c.class == Jekyll::Converters::Markdown
+        c.instance_of? Jekyll::Converters::Markdown
       end
 
       assert converter.setup
