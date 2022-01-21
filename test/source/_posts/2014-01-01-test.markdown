@@ -1,8 +1,8 @@
 ---
-layout: nil
 title: A Title
 author: minitest
-categories: [ test ]
+categories:
+- test
 ---
 
 # A Title
