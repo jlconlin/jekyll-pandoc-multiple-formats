@@ -1,30 +1,42 @@
-# encoding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'jekyll-pandoc-multiple-formats/version'
+# frozen_string_literal: true
 
-Gem::Specification.new do |gem|
-  gem.name          = 'jekyll-pandoc-multiple-formats'
-  gem.version       = JekyllPandocMultipleFormats::VERSION
-  gem.authors       = ['Mauricio Pasquier Juan', 'fauno']
-  gem.email         = ['mauricio@pasquierjuan.com.ar', 'fauno@endefensadelsl.org']
-  gem.description   = %q{This jekyll plugin was inspired by
-  jekyll-pandoc-plugin but it was changed to generate multiple outputs,
-  rather than just using pandoc to generate jekyll html posts. Besides,
-  it doesn't require the 'pandoc-ruby' gem.}
-  gem.summary       = %q{Use pandoc on jekyll to generate posts in multiple formats}
-  gem.homepage      = 'https://github.com/fauno/jekyll-pandoc-multiple-formats'
-  gem.license       = 'MIT'
+Gem::Specification.new do |spec|
+  spec.name          = 'jekyll-pandoc-multiple-formats'
+  spec.version       = '1.0.0'
+  spec.authors       = %w[fauno]
+  spec.email         = %w[fauno@endefensadelsl.org]
 
-  gem.files         = `git ls-files`.split($/)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.require_paths = ['lib']
+  spec.summary       = 'Generates ready to print books, ebooks from a Jekyll site'
+  spec.description   = 'Publishes posts as books, ebooks, and many formats supported by Pandoc from a Jekyll site'
+  spec.homepage      = "https://0xacab.org/edsl/#{spec.name}"
+  spec.license       = 'MIT'
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.7.0')
 
-  gem.add_dependency('jekyll', '> 3.7.0', '< 5')
-  gem.add_dependency('pdf_info', '~> 0.5.0')
-  gem.add_dependency('rtex', '~> 2.1.0')
-  gem.add_development_dependency('rake', '~> 10.5.0')
-  gem.add_development_dependency('minitest', '~> 5.8.0')
-  gem.add_development_dependency('shoulda', '~> 3.5.0')
+  spec.metadata = {
+    'bug_tracker_uri' => "#{spec.homepage}/issues",
+    'homepage_uri' => spec.homepage,
+    'source_code_uri' => spec.homepage,
+    'changelog_uri' => "#{spec.homepage}/-/blob/master/CHANGELOG.md",
+    'documentation_uri' => "https://rubydoc.info/gems/#{spec.name}"
+  }
+
+  spec.files         = Dir['lib/**/*']
+  spec.require_paths = %w[lib]
+
+  spec.extra_rdoc_files = Dir['README.md', 'CHANGELOG.md', 'LICENSE']
+  spec.rdoc_options += [
+    '--title', "#{spec.name} - #{spec.summary}",
+    '--main', 'README.md',
+    '--line-numbers',
+    '--inline-source',
+    '--quiet'
+  ]
+
+  spec.add_dependency 'jekyll', '> 4', '< 5'
+  spec.add_dependency 'pdf_info', '~> 0.5.0'
+  spec.add_dependency 'paru', '~> 0.4.0'
+
+  spec.add_development_dependency 'rake', '~> 13.0.0'
+  spec.add_development_dependency 'minitest', '~> 5.15.0'
+  spec.add_development_dependency 'shoulda', '~> 4.0.0'
 end
