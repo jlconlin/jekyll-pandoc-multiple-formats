@@ -1,0 +1,70 @@
+lang: es
+markdown: pandoc
+pandoc:
+  documents:
+  - posts
+  - categories
+  printing:
+    sheetsize: a4paper
+    signature: false
+    formats:
+    - imposition
+    - binder
+  options:
+    common:
+      from: markdown+smart
+      csl: apa.csl
+      bibliografy: ref.bib
+      section-divs: true
+      email-obfuscation: references
+      toc-depth: 2
+    html5:
+      toc: true
+      template: _layouts/toc.html
+      toc-depth: 3
+    mediawiki: true
+    rst: true
+    pdf:
+      pdf-engine: tectonic
+      table-of-contents: true
+      toc-depth: false
+      include-in-header: _layouts/header.tex
+      include-before-body: _layouts/license.tex
+      variables:
+        fontsize:
+        - 10pt
+        - twoside
+        documentclass: book
+        geometry: hcentering
+        geometry:
+          bindingoffset: 0.5cm
+        geometry:
+          bmargin: 2.5cm
+        links-as-notes: true
+        subparagraph: true
+        graphics: true
+    epub:
+      epub-chapter-level: 2
+    latex:
+      pdf-engine: tectonic
+      table-of-contents: true
+      include-in-header: _layouts/header.tex
+      include-before-body: _layouts/license.tex
+      variables:
+        fontsize:
+        - 10pt
+        - twoside
+        documentclass: book
+        geometry: hcentering
+        geometry:
+          bindingoffset: 0.5cm
+        geometry:
+          bmargin: 2.5cm
+        links-as-notes: true
+        subparagraph: true
+        graphics: true
+    locales:
+      ar:
+        common:
+          variables:
+            mainfont: Amiri
