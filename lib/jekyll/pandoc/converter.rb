@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'paru_helper'
+
 module Jekyll
   module Converters
     class Markdown
@@ -12,13 +14,11 @@ module Jekyll
       # @see Jekyll::Converters::Markdown
       # @see Jekyll::Converters::Markdown::KramdownParser
       class Pandoc
-        # @return [Jekyll::Config]
+        # @return [Jekyll::Configuration]
         attr_reader :config
 
-        # @param [Jekyll::Config]
+        # @param [Jekyll::Configuration]
         def initialize(config)
-          require 'paru/pandoc'
-
           @config = config
         end
 
@@ -36,10 +36,7 @@ module Jekyll
         #
         # @return [Paru::Pandoc]
         def parser
-          @parser ||= Paru::Pandoc.new do
-            from 'markdown+smart'
-            to 'html5'
-          end
+          @parser ||= Jekyll::Pandoc::ParuHelper.from(from: 'markdown+smart', to: 'html5', **config.dig('pandoc_options', :html5))
         end
       end
     end

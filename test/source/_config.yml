@@ -1,5 +1,5 @@
 lang: es
-markdown: pandoc
+markdown: Pandoc
 pandoc:
   documents:
   - posts
@@ -14,13 +14,12 @@ pandoc:
     common:
       from: markdown+smart
       csl: apa.csl
-      bibliografy: ref.bib
+      bibliography: ref.bib
       section-divs: true
       email-obfuscation: references
       toc-depth: 2
     html5:
       toc: true
-      template: _layouts/toc.html
       toc-depth: 3
     mediawiki: true
     rst: true
