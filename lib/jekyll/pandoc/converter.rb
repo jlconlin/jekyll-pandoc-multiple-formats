@@ -36,7 +36,8 @@ module Jekyll
         #
         # @return [Paru::Pandoc]
         def parser
-          @parser ||= Jekyll::Pandoc::ParuHelper.from(from: 'markdown+smart', to: 'html5', **config.dig('pandoc_options', :html5))
+          @parser ||= Jekyll::Pandoc::ParuHelper.from(from: 'markdown+smart', to: 'html5',
+                                                      **config.dig('pandoc_options', :html5))
         end
       end
     end
