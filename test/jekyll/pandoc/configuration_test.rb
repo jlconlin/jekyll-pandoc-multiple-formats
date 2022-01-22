@@ -15,7 +15,7 @@ class Jekyll::Pandoc::ConfigurationTest < MiniTest::Test
     end
 
     should 'detect available formats' do
-      assert_equal %w[html5 mediawiki rst pdf epub latex], @configuration.available_formats
+      assert_equal %i[html5 mediawiki rst pdf epub latex], @configuration.available_formats
     end
 
     should 'detect current locale' do
@@ -43,7 +43,7 @@ class Jekyll::Pandoc::ConfigurationTest < MiniTest::Test
         assert options
         case format
         when 'html5'
-          assert_equal common.slice(*(options.keys - %w[toc-depth])), options.slice(*(common.keys - %w[toc-depth]))
+          assert_equal common.slice(*(options.keys - %i[toc-depth])), options.slice(*(common.keys - %i[toc-depth]))
         else
           assert_equal common.slice(*options.keys), options.slice(*common.keys)
         end
@@ -53,7 +53,7 @@ class Jekyll::Pandoc::ConfigurationTest < MiniTest::Test
     should 'remove options disabled on other levels' do
       @configuration.process
 
-      assert_nil @configuration.options.dig(*%w[pdf toc-depth])
+      assert_nil @configuration.options.dig(*%i[pdf toc-depth])
     end
   end
 
@@ -66,7 +66,7 @@ class Jekyll::Pandoc::ConfigurationTest < MiniTest::Test
     should 'include locale-specific flags' do
       @configuration.process
 
-      assert_equal 'Amiri', @configuration.options.dig(*%w[pdf variables mainfont])
+      assert_equal 'Amiri', @configuration.options.dig(*%i[pdf variables mainfont])
     end
   end
 end

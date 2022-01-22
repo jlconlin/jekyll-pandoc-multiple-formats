@@ -46,7 +46,7 @@ module Jekyll
       #
       # @return [Array]
       def available_formats
-        @available_formats ||= ((config['options']&.keys || []) - SPECIAL_OPTIONS).freeze
+        @available_formats ||= ((config['options']&.keys || []) - SPECIAL_OPTIONS).map(&:to_sym).freeze
       end
 
       # Merge all options and remove the ones disabled
@@ -55,23 +55,55 @@ module Jekyll
       #
       # @return [nil]
       def process
+        return unless options.empty?
+
         available_formats.each do |format|
           options[format] =
-            [
-              config.dig('options', 'common'),
-              config.dig('options', 'locales', current_locale, 'common'),
-              config.dig('options', format),
-              config.dig('options', 'locales', current_locale, format)
-            ].compact.reduce do |config, next_config|
-              next_config = {} if next_config == true
-
-              Jekyll::Utils.deep_merge_hashes(config, next_config)
-            end.select do |_, value|
-              value
+            paru_options(disable_options(reduce_options(format.to_s))).tap do |c|
+              c[:variables] = paru_options(disable_options(c[:variables]))
             end
         end
 
+        site.config['pandoc_options'] = options
+
         nil
+      end
+
+      private
+
+      # @param [String]
+      # @return [Hash]
+      def reduce_options(format)
+        [
+          config.dig('options', 'common'),
+          config.dig('options', 'locales', current_locale, 'common'),
+          config.dig('options', format),
+          config.dig('options', 'locales', current_locale)
+        ].compact.reduce do |config, next_config|
+          next_config = {} if next_config == true
+
+          Jekyll::Utils.deep_merge_hashes(config, next_config)
+        end
+      end
+
+      # Removes options with non truthy values
+      #
+      # @param [Hash,nil]
+      # @return [Hash,nil]
+      def disable_options(options)
+        options&.select do |_, v|
+          v
+        end
+      end
+
+      # Convert options to Paru methods
+      #
+      # @param [Hash,nil]
+      # @return [Hash,nil]
+      def paru_options(options)
+        options&.transform_keys do |k|
+          k.gsub('-', '_').to_sym
+        end
       end
     end
   end
