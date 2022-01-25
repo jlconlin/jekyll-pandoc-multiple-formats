@@ -51,5 +51,9 @@ class Jekyll::Pandoc::DocumentTest < MiniTest::Test
       assert_equal false, @document.destination(@site.dest).include?('_posts')
       assert_equal @source_document.cleaned_relative_path, @document.cleaned_relative_path
     end
+
+    should 'not dump ruby objects on sanitized data' do
+      assert_equal false, @document.sanitized_data.to_yaml.include?('!ruby/object')
+    end
   end
 end
