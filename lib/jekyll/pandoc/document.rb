@@ -55,11 +55,12 @@ module Jekyll
         super
       end
 
-      # Remove _posts too so Jekyll doesn't confuse it with a category
+      # Remove collection directory too so Jekyll doesn't confuse it
+      # with a category
       #
       # @return [String]
       def cleaned_relative_path
-        @cleaned_relative_path ||= super.sub('_posts', '')
+        @cleaned_relative_path ||= super.sub(source_document.collection.relative_directory, '')
       end
 
       # Temporary file where Pandoc writes binary formats
