@@ -115,7 +115,7 @@ module Jekyll
       # Duplicate the content
       #
       # @return [nil]
-      def read_content(_)
+      def read_content(**)
         self.content = source_document.content.dup
 
         nil

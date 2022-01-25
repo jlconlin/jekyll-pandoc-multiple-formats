@@ -34,3 +34,12 @@ class Minitest::Test
     @site_configuration ||= YAML.safe_load(File.read(File.join(site_source_directory, '_config.yml')))
   end
 end
+
+module Jekyll
+  # TODO: send a patch to Jekyll
+  class FrontmatterDefaults
+    def reset
+      @glob_cache = {} if defined? @glob_cache
+    end
+  end
+end
