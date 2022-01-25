@@ -3,6 +3,8 @@ markdown: Pandoc
 collections:
   a_collection:
     permalink: "nothing"
+  rst:
+    permalink: ":collection/:name"
 pandoc:
   documents:
   - posts

@@ -40,5 +40,10 @@ class Jekyll::Pandoc::GeneratorTest < MiniTest::Test
         @generator.send(:generate_documents!)
       end
     end
+
+    should 'follow collections manual configuration' do
+      assert_equal @site.config.dig('collections', 'rst', 'permalink'),
+                   @generator.send(:collection_for, 'rst').metadata['permalink']
+    end
   end
 end
