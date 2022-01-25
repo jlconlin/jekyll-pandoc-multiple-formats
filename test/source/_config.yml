@@ -1,5 +1,8 @@
 lang: es
 markdown: Pandoc
+collections:
+  a_collection:
+    permalink: "nothing"
 pandoc:
   documents:
   - posts
