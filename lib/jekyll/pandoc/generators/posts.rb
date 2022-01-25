@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../document'
+require_relative '../generator'
 
 module Jekyll
   module Pandoc
@@ -14,7 +15,7 @@ module Jekyll
         #
         # @return [Boolean]
         def generate?
-          config['documents'].include? 'posts'
+          config['documents']&.include? 'posts'
         end
 
         # Documents to generate from
