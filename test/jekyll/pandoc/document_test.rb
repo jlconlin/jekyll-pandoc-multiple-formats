@@ -31,6 +31,17 @@ class Jekyll::Pandoc::DocumentTest < MiniTest::Test
       assert @document.binary?
     end
 
+    should 'not be binary if text plain' do
+      @collection = Jekyll::Collection.new(@site, 'rst').tap do |col|
+        @site.collections['rst'] = col
+      end
+
+      @document = Jekyll::Pandoc::Document.new @source_document.path, collection: @collection,
+                                                                      source_document: @source_document, site: @site
+
+      assert !@document.binary?
+    end
+
     should 'have a format' do
       assert_equal '.pdf', @document.output_ext
       assert @document.destination(@site.dest).end_with?('.pdf')
