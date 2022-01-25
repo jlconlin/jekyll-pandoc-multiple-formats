@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
-
 module Jekyll
   module Pandoc
     # Generates all Pandoc documents and adds them to the site.  The
