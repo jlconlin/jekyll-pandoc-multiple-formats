@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'paru_helper'
+require 'jekyll/pandoc/paru_helper'
 
 module Jekyll
   module Converters
@@ -37,7 +37,7 @@ module Jekyll
         # @return [Paru::Pandoc]
         def parser
           @parser ||= Jekyll::Pandoc::ParuHelper.from(from: 'markdown+smart', to: 'html5',
-                                                      **config.dig('pandoc_options', :html5))
+                                                      **config['pandoc'].options[:html5])
         end
       end
     end

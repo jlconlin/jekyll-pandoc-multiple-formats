@@ -1,0 +1,105 @@
+exclude:
+- lib
+- test
+plugins:
+- jekyll-pandoc-multiple-formats
+permalink: ":title/"
+# Habilitar generación del sitio con Pandoc
+collections:
+  mediawiki:
+    permalink: ":collection/:name"
+markdown: Pandoc
+# Configuración de Pandoc, representadada en YAML.
+pandoc:
+# Niveles de agregación de los documentos:
+#
+# * site: Generar un documento con todos los artículos del sitio
+# * categories: Generar un documento por cada categoría
+# * posts: Generar un documento por cada artículo
+  documents:
+  - site
+  - categories
+  - posts
+# Opciones de imprenta. Luego de generar los PDFs, se los convierte para
+# que puedan ser impresos en papel.
+  printing:
+# El tamaño de hoja que acepta la impresora.  Solo soportamos A de
+# 1 a 6.  Se combina con la variable papersize en el formato `pdf`.
+    sheetsize: a4
+# La cantidad de páginas por cuadernillo para realizar la imposición.
+# Dejar vacío para imponer un solo cuadernillo abrochable.  Usar
+# múltiplos de 4 para encuadernación cosida.
+    signature: 20
+# Formatos de impresión.
+#
+# * imposition: cuadernillos doblados al medio (acaballados), por
+#   ejemplo revistas, zines y libros con encuadernación cosida.
+#
+# * binder: páginas individuales para encuadernación con pegamento.
+    formats:
+    - imposition
+    - binder
+# Opciones para los distintos formatos de Pandoc.  Ver `man pandoc` para
+# obtener las opciones disponibles y sus valores.
+#
+# * common: Opciones compartidas por todos los formatos
+#
+# * locales: Opciones por cada idioma del sitio, para combinar con
+#   jekyll-locales.
+#
+# * html5, etc: Opciones para cada formato
+#
+# Las opciones `--from`, `--to`, `--output` y `--variable=lang:` son
+# generadas y agregadas automáticamente.
+#
+# Las opciones se fusiona en este orden de prioridad:
+#
+# 1. comunes
+# 2. comunes por idioma
+# 3. formato
+# 4. formato por idioma
+#
+# Es decir que las opciones de idioma pueden agregar o quitar opciones
+# de formato y comunes y las de de formato pueden agregar o quitar
+# opciones comunes.
+  options:
+    common:
+# Las opciones que no tienen un valor se configuran en `true`.  En este
+# ejemplo sería el equivalente de ejecutar:
+#
+# ```bash
+# pandoc --table-of-contents --toc-depth 2
+# ```
+      table-of-contents: true
+      toc-depth: 2
+# Cada formato corresponde a un formato reconocido por Pandoc en su
+# opción `--to`.
+    html5:
+# Para deshabilitar una opción agregada anteriormente, configurarla en
+# falso.
+      table-of-contents: false
+#   pdf:
+#     pdf-engine: tectonic
+#     variables:
+#       papersize: a5
+    epub:
+# También se puede cambiar el valor de una opción anterior
+      toc-depth: 3
+# Los formatos sin opciones especiales se activan con `true`.
+    mediawiki: true
+    rst: true
+#   latex:
+# Configuración por idioma, todas las opciones aquí se agregan a las de
+# cada formato.
+#
+# Por cada idioma se repite la misma estructura de opciones comunes
+# y específicas de cada formato.
+#   locales:
+# En este caso se está usando una tipografía con soporte para árabe en
+# el sitio en árabe.
+#     ar:
+#       common:
+# Las variables afectan a las plantillas, para saber cuáles están
+# soportadas por cada formato, consultar `man pandoc`.
+#         variables:
+#           mainfont: Amiri

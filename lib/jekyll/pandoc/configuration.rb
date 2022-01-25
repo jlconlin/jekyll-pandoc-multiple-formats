@@ -9,6 +9,8 @@ module Jekyll
     #
     # There's no default configuration.
     class Configuration
+      extend Forwardable
+
       SPECIAL_OPTIONS = %w[common locales].freeze
 
       # Jekyll site
@@ -20,6 +22,9 @@ module Jekyll
       #
       # @return [Hash]
       attr_reader :options
+
+      # Delegate key accessors to config
+      def_delegators :config, :[], :dig
 
       # @param [Jekyll::Site]
       def initialize(site)
@@ -63,8 +68,6 @@ module Jekyll
               c[:variables] = paru_options(disable_options(c[:variables]))
             end
         end
-
-        site.config['pandoc_options'] = options
 
         nil
       end

@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
-require_relative 'jekyll/converters/pandoc'
+require_relative 'jekyll/pandoc/configuration'
+require_relative 'jekyll/converters/markdown/pandoc'
+require_relative 'jekyll/pandoc/generator'
+require_relative 'jekyll/pandoc/generators/posts'
 
-require 'jekyll-pandoc-multiple-formats/config'
 
-# TODO this may go to a separate gem
-require 'jekyll-pandoc-multiple-formats/printer'
-require 'jekyll-pandoc-multiple-formats/imposition'
-require 'jekyll-pandoc-multiple-formats/binder'
-require 'jekyll-pandoc-multiple-formats/unite'
 
-require 'jekyll-pandoc-multiple-formats/pandoc_file'
-require 'jekyll-pandoc-multiple-formats/generator'
+# We modify the configuration post read, and not after init, because
+# Jekyll resets twice and any modification to config will invalidate the
+# cache.
+Jekyll::Hooks.register :site, :post_read do |site|
+  site.config['pandoc'] = Jekyll::Pandoc::Configuration.new(site).tap(&:process)
+end
