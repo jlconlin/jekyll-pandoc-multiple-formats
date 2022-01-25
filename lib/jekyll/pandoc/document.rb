@@ -59,8 +59,8 @@ module Jekyll
       # with a category
       #
       # @return [String]
-      def cleaned_relative_path
-        @cleaned_relative_path ||= super.sub(source_document.collection.relative_directory, '')
+      def relative_path
+        @relative_path ||= super.sub(source_document.collection.relative_directory, '')
       end
 
       # Temporary file where Pandoc writes binary formats
