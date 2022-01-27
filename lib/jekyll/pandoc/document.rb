@@ -67,7 +67,7 @@ module Jekyll
       #
       # @return [Tempfile]
       def tempfile
-        @tempfile ||= Tempfile.new([source_document.data['slug'], output_ext])
+        @tempfile ||= Tempfile.new([data['slug'], output_ext])
       end
 
       # Clone data from the source document
