@@ -78,10 +78,10 @@ pandoc:
 # Para deshabilitar una opción agregada anteriormente, configurarla en
 # falso.
       table-of-contents: false
-#   pdf:
-#     pdf-engine: tectonic
-#     variables:
-#       papersize: a5
+    pdf:
+      pdf-engine: tectonic
+      variable:
+      - papersize=a5
     epub:
 # También se puede cambiar el valor de una opción anterior
       toc-depth: 3

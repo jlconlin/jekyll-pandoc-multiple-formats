@@ -15,10 +15,6 @@ module Jekyll
       def from(options)
         Paru::Pandoc.new.tap do |paru|
           options.each do |option, value|
-            # Do nothing, variables are better set on the document
-            # front matter, so Pandoc decides how to concatenate them.
-            next if option == :variables
-
             paru.send option, value
           end
         end

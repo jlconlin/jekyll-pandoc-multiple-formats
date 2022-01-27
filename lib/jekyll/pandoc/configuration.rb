@@ -64,9 +64,7 @@ module Jekyll
 
         available_formats.each do |format|
           options[format] =
-            paru_options(disable_options(reduce_options(format.to_s))).tap do |c|
-              c[:variables] = paru_options(disable_options(c[:variables]))
-            end
+            paru_options(disable_options(reduce_options(format.to_s)))
         end
 
         nil
