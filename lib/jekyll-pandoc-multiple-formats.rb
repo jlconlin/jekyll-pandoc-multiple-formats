@@ -10,6 +10,6 @@ require_relative 'jekyll/pandoc/generators/posts'
 # We modify the configuration post read, and not after init, because
 # Jekyll resets twice and any modification to config will invalidate the
 # cache.
-Jekyll::Hooks.register :site, :post_read do |site|
+Jekyll::Hooks.register :site, :post_read, priority: :high do |site|
   site.config['pandoc'] = Jekyll::Pandoc::Configuration.new(site).tap(&:process)
 end
