@@ -54,6 +54,15 @@ module Jekyll
         @available_formats ||= ((config['options']&.keys || []) - SPECIAL_OPTIONS).map(&:to_sym).freeze
       end
 
+      # Find PDF papersize
+      #
+      # @return [Symbol]
+      def papersize
+        @papersize ||= options.dig(:pdf, :variable).find do |v|
+          v.start_with? 'papersize='
+        end&.split('=', 2)&.last&.to_sym
+      end
+
       # Merge all options and remove the ones disabled
       #
       # TODO: Process common first so it's not done for every format.
