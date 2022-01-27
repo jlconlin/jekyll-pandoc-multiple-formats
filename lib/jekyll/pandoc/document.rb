@@ -121,11 +121,23 @@ module Jekyll
         nil
       end
 
-      # "Read" data
+      # "Read" data and adds itself to the source document data.
       #
       # @return [nil]
       def read_post_data
-        data
+        # Assign a new UUIDv4 if the source document has one.
+        #
+        # TODO: How to assign the same UUID to every document?
+        if data.key? 'uuid'
+          require 'securerandom'
+          data['uuid'] = SecureRandom.uuid
+        end
+
+        source_document.data['formats'] ||= []
+        source_document.data['formats']  << self
+        # Can't guarantee the front matter won't use the same key
+        source_document.data[collection.label] ||= self
+
         nil
       end
 
