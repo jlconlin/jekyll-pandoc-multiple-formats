@@ -9,6 +9,8 @@ module Jekyll
       # Generates Pandoc documents from Jekyll posts collection.  Each
       # format is a collection.
       class Posts < Generator
+        priority :highest
+
         private
 
         # Only generate if aggregating posts is enabled
