@@ -29,10 +29,16 @@ module Jekyll
         @site = site
         @collections = {}
 
-        generate_documents! if generate?
+        return unless generate?
+
+        setup
+        generate_documents!
       end
 
       private
+
+      # Do nothing for now
+      def setup; end
 
       # Source documents.  Every generator know how to fetch its own
       # documents.
