@@ -70,6 +70,14 @@ module Jekyll
         @tempfile ||= Tempfile.new([data['slug'], output_ext])
       end
 
+      # The path where the renderer wrote the actual contents for binary
+      # files.
+      #
+      # @return [String]
+      def rendered_path
+        tempfile.path
+      end
+
       # Clone data from the source document
       #
       # @return [Hash]
@@ -161,7 +169,7 @@ module Jekyll
         path = destination(dest)
 
         FileUtils.rm path
-        FileUtils.cp tempfile.path, path
+        FileUtils.cp rendered_path, path
 
         nil
       end
