@@ -1,0 +1,10 @@
+\documentclass[{{ sheetsize }},10pt]{article}
+
+\usepackage{pgfpages}
+\usepackage{pdfpages}
+
+\pgfpagesuselayout{ {{- nup }} on 1}[{{ sheetsize }},{{ options }}]
+
+\begin{document}
+  \includepdf[pages={ {{- pages | join: ',' -}} }]{ {{- path -}} }
+\end{document}
