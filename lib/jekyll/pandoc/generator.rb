@@ -76,15 +76,18 @@ module Jekyll
       # @param label [String]
       # @return [Hash]
       def collection_for(label)
-        @collections[label] ||= Jekyll::Collection.new(site, label).tap do |col|
-          site.collections[label] = col
-          # Allow to configure the collection
-          # @see https://jekyllrb.com/docs/collections/
-          col.metadata['output'] = true unless col.metadata.key? 'output'
-          # Follow the same permalink structure unless otherwise
-          # specified.
-          col.metadata['permalink'] = site.posts.url_template unless site.config.dig('collections', label, 'permalink')
-        end
+        site.collections[label] ||=
+          Jekyll::Collection.new(site, label).tap do |col|
+            # Allow to configure the collection
+            # @see https://jekyllrb.com/docs/collections/
+            col.metadata['output'] = true unless col.metadata.key? 'output'
+            # Follow the same permalink structure unless otherwise
+            # specified.
+            unless site.config.dig('collections', label, 'permalink')
+              col.metadata['permalink'] =
+                site.posts.url_template
+            end
+          end
       end
     end
   end
