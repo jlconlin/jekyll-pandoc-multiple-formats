@@ -73,7 +73,7 @@ module Jekyll
       # configuration and brings everything else from site
       # configuration.
       #
-      # @param [String]
+      # @param label [String]
       # @return [Hash]
       def collection_for(label)
         @collections[label] ||= Jekyll::Collection.new(site, label).tap do |col|

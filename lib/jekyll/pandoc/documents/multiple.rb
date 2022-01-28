@@ -14,8 +14,8 @@ module Jekyll
         # @return [Array]
         attr_reader :source_documents
 
-        # @param [String]
-        # @param [Hash]
+        # @param path [String]
+        # @param relations [Hash]
         def initialize(path, relations = {})
           @source_documents = relations[:source_documents]
           relations[:source_document] = self

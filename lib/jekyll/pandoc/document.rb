@@ -48,8 +48,8 @@ module Jekyll
       # @return [String]
       attr_accessor :output
 
-      # @param [String]
-      # @param [Hash]
+      # @param path [String]
+      # @param relations [Hash]
       def initialize(path, relations = {})
         @source_document = relations[:source_document]
         super

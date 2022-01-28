@@ -16,7 +16,7 @@ module Jekyll
       # write the output file on a temporary file that is later copied
       # to the destination by {Jekyll::Pandoc::Document#write}.
       #
-      # @param [String]
+      # @param content [String]
       # @return [String] empty string when binary file
       def convert(content)
         output = super

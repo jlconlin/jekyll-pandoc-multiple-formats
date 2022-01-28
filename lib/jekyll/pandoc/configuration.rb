@@ -26,7 +26,7 @@ module Jekyll
       # Delegate key accessors to config
       def_delegators :config, :[], :dig
 
-      # @param [Jekyll::Site]
+      # @param site [Jekyll::Site]
       def initialize(site)
         @site = site
         @options = {}
@@ -81,7 +81,7 @@ module Jekyll
 
       private
 
-      # @param [String]
+      # @param format [String]
       # @return [Hash]
       def reduce_options(format)
         [
@@ -98,7 +98,7 @@ module Jekyll
 
       # Removes options with non truthy values
       #
-      # @param [Hash,nil]
+      # @param options [Hash,nil]
       # @return [Hash,nil]
       def disable_options(options)
         options&.select do |_, v|
@@ -108,7 +108,7 @@ module Jekyll
 
       # Convert options to Paru methods
       #
-      # @param [Hash,nil]
+      # @param options [Hash,nil]
       # @return [Hash,nil]
       def paru_options(options)
         options&.transform_keys do |k|

@@ -10,7 +10,7 @@ module Jekyll
 
       # Returns a Paru::Pandoc with options set
       #
-      # @param [Hash]
+      # @param options [Hash]
       # @return [Paru::Pandoc]
       def from(options)
         Paru::Pandoc.new.tap do |paru|

@@ -33,7 +33,7 @@ module Jekyll
 
       # Find a program in PATH by name or throw an error
       #
-      # @param [String] Program name
+      # @param util [String] Program name
       # @return [String] Program path
       def which(util)
         @which_cache ||= {}

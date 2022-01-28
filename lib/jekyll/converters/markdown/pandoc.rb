@@ -17,14 +17,14 @@ module Jekyll
         # @return [Jekyll::Configuration]
         attr_reader :config
 
-        # @param [Jekyll::Configuration]
+        # @param config [Jekyll::Configuration]
         def initialize(config)
           @config = config
         end
 
         # Convert the content into HTML
         #
-        # @param [String] Markdown
+        # @param content [String] Markdown
         # @return [String] HTML
         def convert(content)
           parser << content
