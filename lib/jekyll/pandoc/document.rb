@@ -230,6 +230,8 @@ module Jekyll
       def generate_excerpt?
         false
       end
+
+      def generate_excerpt; end
     end
   end
 end
