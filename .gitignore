@@ -1,1 +1,7 @@
 test/destination/
+.jekyll-cache/
+_site/
+.bundle/
+.yardoc/
+doc/
+Gemfile.lock
