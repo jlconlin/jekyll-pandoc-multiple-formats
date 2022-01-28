@@ -28,7 +28,7 @@ module Jekyll
         #
         # @return [Hash]
         def data
-          @data ||= {}
+          @data ||= { 'multiple' => true }
         end
 
         # The content is a concatenated string of source_documents
@@ -40,7 +40,7 @@ module Jekyll
         # @return [nil]
         def read_content(**)
           self.content = source_documents.map do |doc|
-            ["\n\n# #{doc['title']} {##{extract_id(doc)}}", doc.content]
+            ["\n\n# #{doc['title']} {##{extract_id(doc)} data-chapter-title=true}", doc.content]
           end.flatten.join("\n\n")
 
           nil

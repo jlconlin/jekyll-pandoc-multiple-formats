@@ -141,6 +141,8 @@ module Jekyll
           data['uuid'] = SecureRandom.uuid
         end
 
+        data['binary'] = binary?
+
         source_document.data['formats'] ||= []
         source_document.data['formats']  << self
         # Can't guarantee the front matter won't use the same key

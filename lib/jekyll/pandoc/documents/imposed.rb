@@ -30,6 +30,8 @@ module Jekyll
           source_document.source_document.data['imposed'] =
             source_document.data['imposed'] = self
 
+          source_document.source_document.data['formats'] << self
+
           nil
         end
 
