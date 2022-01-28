@@ -31,7 +31,7 @@ module Jekyll
           #{output}
         EOD
 
-        ParuHelper.from(from: 'markdown+smart', to: type, **site.config['pandoc'].options[type], **extra) << content
+        ParuHelper.from(from: 'markdown', to: type, **site.config['pandoc'].options[type], **extra) << content
       end
 
       # Don't convert Markdown to HTML, but do convert everything else
