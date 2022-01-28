@@ -190,6 +190,12 @@ module Jekyll
         super.sub(/\.html\z/, output_ext)
       end
 
+      def url
+        @url ||= super.tap do |u|
+          u << data['slug'] << output_ext if u.end_with? '/'
+        end
+      end
+
       # We don't have layouts (yet?)
       #
       # @return [FalseClass]
