@@ -48,9 +48,8 @@ module Jekyll
       # @return [String]
       attr_accessor :output
 
-      # @param [Jekyll::Site]
-      # @param [Jekyll::Collection]
-      # @param [Jekyll::Document]
+      # @param [String]
+      # @param [Hash]
       def initialize(path, relations = {})
         @source_document = relations[:source_document]
         super
@@ -91,7 +90,7 @@ module Jekyll
       # Copied almost verbatim from jekyll-linked-posts
       #
       # @return [Hash]
-      def sanitized_data
+      def sanitize_data(data)
         data.reject do |k, _|
           EXCLUDED_DATA.include? k
         end.transform_values do |value|

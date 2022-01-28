@@ -25,7 +25,7 @@ module Jekyll
         extra[:output] = document.tempfile.path if document.binary?
 
         content = <<~EOD
-          #{document.sanitized_data.to_yaml}
+          #{document.sanitize_data(document.data).to_yaml}
           ---
 
           #{output}
