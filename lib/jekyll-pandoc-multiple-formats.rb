@@ -3,6 +3,7 @@
 require_relative 'jekyll/pandoc/configuration'
 require_relative 'jekyll/converters/markdown/pandoc'
 require_relative 'jekyll/pandoc/generators/posts'
+require_relative 'jekyll/pandoc/generators/category'
 require_relative 'jekyll/pandoc/generators/imposition'
 require_relative 'jekyll/pandoc/generators/binder'
 
