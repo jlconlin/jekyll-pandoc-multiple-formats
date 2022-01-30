@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'paru_helper'
+require_relative 'utils'
 
 module Jekyll
   module Pandoc
@@ -25,11 +26,15 @@ module Jekyll
         extra[:output] = document.tempfile.path if document.binary?
 
         content = <<~EOD
-          #{document.sanitize_data(document.data).to_yaml}
+          #{Utils.sanitize_data(document.data).to_yaml}
           ---
 
           #{output}
         EOD
+
+        File.open(File.join('/tmp', document.relative_path), 'w') do |f|
+          f.write content
+        end
 
         ParuHelper.from(from: 'markdown', to: type, **site.config['pandoc'].options[type], **extra) << content
       end

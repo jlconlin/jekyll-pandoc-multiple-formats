@@ -3,6 +3,7 @@
 require 'securerandom'
 require 'jekyll/utils'
 require_relative '../document'
+require_relative '../utils'
 
 module Jekyll
   module Pandoc
@@ -55,7 +56,7 @@ module Jekyll
           data['uuid'] ||= SecureRandom.uuid
 
           source_documents.each do |doc|
-            data[extract_id(doc)] = sanitize_data doc.data
+            data[extract_id(doc)] = Jekyll::Pandoc::Utils.sanitize_data doc.data
           end
 
           nil

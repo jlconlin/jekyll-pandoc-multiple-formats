@@ -18,11 +18,6 @@ module Jekyll
       # @return [Array]
       BINARY_FORMATS = %i[pdf epub epub3 fb2 docx odt].freeze
 
-      # Remove these keys from {#data}
-      #
-      # @return [Array]
-      EXCLUDED_DATA = %w[excerpt permalink].freeze
-
       # Site
       #
       # @return [Jekyll::Site]
@@ -83,38 +78,6 @@ module Jekyll
       # @return [Hash]
       def data
         @data ||= source_document.data.dup
-      end
-
-      # Remove and transform values for safe YAML dumping.
-      #
-      # Copied almost verbatim from jekyll-linked-posts
-      #
-      # @return [Hash]
-      def sanitize_data(data)
-        data.reject do |k, _|
-          EXCLUDED_DATA.include? k
-        end.transform_values do |value|
-          case value
-          when Jekyll::Document
-            value.data['uuid']
-          when Jekyll::Convertible
-            value.data['uuid']
-          when Set
-            value.map do |v|
-              v.respond_to?(:data) ? v.data['uuid'] : v
-            end
-          when Array
-            value.map do |v|
-              v.respond_to?(:data) ? v.data['uuid'] : v
-            end
-          when Hash
-            value.transform_values do |v|
-              v.respond_to?(:data) ? v.data['uuid'] : v
-            end
-          else
-            value
-          end
-        end
       end
 
       # Do nothing

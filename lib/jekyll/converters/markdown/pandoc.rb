@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'jekyll/pandoc/paru_helper'
+require 'jekyll/pandoc/utils'
 
 module Jekyll
   module Converters
