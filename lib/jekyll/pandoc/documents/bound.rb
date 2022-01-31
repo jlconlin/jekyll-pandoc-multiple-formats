@@ -26,6 +26,7 @@ module Jekyll
           source_document.source_document.data['bound'] =
             source_document.data['bound'] = self
 
+          source_document.source_document.data['formats'] ||= []
           source_document.source_document.data['formats'] << self
 
           nil
