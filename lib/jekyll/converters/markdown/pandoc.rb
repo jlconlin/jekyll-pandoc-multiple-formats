@@ -28,7 +28,13 @@ module Jekyll
         # @param content [String] Markdown
         # @return [String] HTML
         def convert(content)
-          parser << content
+          parser << <<~CONTENT
+            ---
+            title: Jekyll
+            ---
+
+            #{content}
+          CONTENT
         end
 
         private
