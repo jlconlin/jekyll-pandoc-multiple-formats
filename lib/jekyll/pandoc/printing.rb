@@ -133,7 +133,7 @@ module Jekyll
 
       # Generates a new PDF and writes it into the site.
       #
-      # @return [nil]
+      # @return [String] empty output
       def convert(_)
         Dir.mktmpdir do |dir|
           Dir.chdir dir do
@@ -152,6 +152,8 @@ module Jekyll
             end
           end
         end
+
+        ''
       end
 
       # Detect if sheet should be printed in landscape mode.
