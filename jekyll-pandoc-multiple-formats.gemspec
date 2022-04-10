@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 Gem::Specification.new do |spec|
-  spec.name          = 'jekyll-pandoc-multiple-formats'
-  spec.version       = '1.0.0'
+  spec.name          = 'jekyll-printing-press'
+  spec.version       = '1.0.0rc1'
   spec.authors       = %w[fauno]
   spec.email         = %w[fauno@endefensadelsl.org]
 
   spec.summary       = 'Generates ready to print books, ebooks from a Jekyll site'
   spec.description   = 'Publishes posts as books, ebooks, and many formats supported by Pandoc from a Jekyll site'
-  spec.homepage      = "https://0xacab.org/edsl/#{spec.name}"
+  spec.homepage      = "https://0xacab.org/edsl/jekyll-pandoc-multiple-formats"
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.7.0')
 
