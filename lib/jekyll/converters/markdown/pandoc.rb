@@ -28,13 +28,7 @@ module Jekyll
         # @param content [String] Markdown
         # @return [String] HTML
         def convert(content)
-          parser << <<~CONTENT
-            ---
-            title: Jekyll
-            ---
-
-            #{content}
-          CONTENT
+          parser << content
         end
 
         private
@@ -44,6 +38,7 @@ module Jekyll
         # @return [Paru::Pandoc]
         def parser
           @parser ||= Jekyll::Pandoc::ParuHelper.from(from: 'markdown+smart', to: 'html5',
+                                                      metadata: 'title=Jekyll',
                                                       **config['pandoc'].options[:html5])
         end
       end
