@@ -1,0 +1,62 @@
+---
+layout: default
+---
+
+<article>
+  <header id="title-block-header">
+    <h1 class="title">{{ page.title }}</h1>
+
+    {% if page.subtitle %}
+      <p class="subtitle">{{ page.subtitle }}</p>
+    {% endif %}
+
+    {% for author in page.author %}
+      <p class="author">{{ author }}</p>
+    {% endfor %}
+
+    <time class="date" datetime="{{ page.date }}">{{ page.date | date: site.i18n.date.format }}</time>
+
+    <nav>
+      {% for locale in page.lang %}
+        {% unless locale.collection == site.locale %}
+          <a hreflang="{{ locale.collection }}" href="../{{ locale.url }}">{{ site.data[locale.collection].locale_name }}</a>
+        {% endunless %}
+      {% endfor %}
+    </nav>
+
+    <nav>
+      {% for format in page.formats %}
+        {% include format.html format=format title=page.title %}
+      {% endfor %}
+    </nav>
+  </header>
+
+  <div class="e-content">
+    {% comment %}
+      Since by the time Pandoc rendered Markdown and template, Jekyll
+      already parsed and rendered Liquid, we can't add Liquid to Pandoc
+      includes.
+    {% endcomment %}
+    {{ content | replace_first: "@@toc@@", site.i18n.toc }}
+  </div>
+
+  <footer>
+    <nav class="w-100 d-flex flex-row justify-content-between">
+      <div>
+        {% if page.previous %}
+          <a rel="prev" href="{{ page.previous.url }}">
+            {{ page.previous.title }}
+          </a>
+        {% endif %}
+      </div>
+
+      <div>
+        {% if page.next %}
+          <a rel="next" href="{{ page.next.url }}">
+            {{ page.next.title }}
+          </a>
+        {% endif %}
+      </div>
+    </nav>
+  </footer>
+</article>

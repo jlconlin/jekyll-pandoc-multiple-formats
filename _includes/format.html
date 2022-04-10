@@ -1,0 +1,4 @@
+<a {% if include.format.binary %}download="{{ include.title }}.{{ include.format.collection }}"{% endif %}
+  href="{{ include.format.url }}">
+  {{- include.format.collection -}}
+</a>

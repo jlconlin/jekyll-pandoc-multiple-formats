@@ -1,0 +1,20 @@
+---
+permalink: redirector.html
+---
+<html>
+  <head>
+    <meta charset="UTF-8">
+    {% if jekyll.environment == 'production' %}
+      <meta http-equiv="refresh" content="0; {{ site.default_locale }}/" />
+    {% endif %}
+  </head>
+  <body style="width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; margin: 0; padding: 0">
+    <h1>{{ site.title }}</h1>
+    <ul style="padding: 0; list-style: none; text-align: center;">
+      <!-- Let visitors decide which locale they like to access -->
+      {% for locale in site.locales %}
+        <li><a href="{{ locale }}/" hreflang="{{ locale }}">{{ site.data[locale].locale_name }}</a></li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

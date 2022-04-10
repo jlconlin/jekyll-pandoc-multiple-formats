@@ -1,0 +1,5 @@
+{%- capture locale_dir -%}
+  ../{%- unless include.locale == site.default_locale -%}{{ include.locale }}/{%- endunless -%}
+{%- endcapture -%}
+
+<a href="{{ locale_dir }}" hreflang="{{ include.locale }}">{{ site.data[include.locale].locale_name }}</a>

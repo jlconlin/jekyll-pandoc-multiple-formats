@@ -1,10 +1,25 @@
+excerpt_separator: nil
+strict_front_matter: true
+title: Jekyll Printing Press
+sass:
+  style: compressed
+  load_paths:
+  - node_modules
+locales:
+- en
+- es
 exclude:
 - lib
 - test
 plugins:
+- jekyll-seo-tag
+- sutty-liquid
+- jekyll-linked-posts
+- jekyll-relative-urls
+- jekyll-locales
+- jekyll-order
 - jekyll-pandoc-multiple-formats
 permalink: ":title/"
-# Habilitar generación del sitio con Pandoc
 collections:
   mediawiki:
     permalink: ":collection/:name"
@@ -18,7 +33,6 @@ pandoc:
 # * posts: Generar un documento por cada artículo
   documents:
   - site
-  - categories
   - posts
 # Opciones de imprenta. Luego de generar los PDFs, se los convierte para
 # que puedan ser impresos en papel.
@@ -77,7 +91,8 @@ pandoc:
     html5:
 # Para deshabilitar una opción agregada anteriormente, configurarla en
 # falso.
-      table-of-contents: false
+      table-of-contents: true
+      template: _includes/toc.html
     pdf:
       pdf-engine: tectonic
       variable:

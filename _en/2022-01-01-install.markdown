@@ -1,0 +1,71 @@
+---
+layout: post
+title: Install
+categories:
+- Getting started
+uuid: 7ef630a6-3c55-4b5d-b6eb-1c23cb9ea3f7
+lang:
+- ef0ca80d-09b4-4be6-9539-b99d396b9626
+---
+
+## Dependencies
+
+* [Pandoc](https://pandoc.org/).  Does most of the work converting
+  Markdown to other formats.
+
+* [Tectonic](https://tectonic-typesetting.github.io/).  Recommended PDF
+  engine for Pandoc.  Instead of installing the whole TeXLive
+  distribution, Tectonic only downloads the packages required for your
+  file.  It will also be used internally to generated imposition and
+  binding formats.
+
+* `pdfinfo` program provided by
+  [Poppler](https://poppler.freedesktop.org/).  Only needed if you want
+  to produce PDF.  Currently it's only used to figure out PDF page
+  count. If you know of another way to reliably find PDFs page count,
+  please let us know.
+
+## Ready to go environment
+
+If you're using Linux x86\_64, we recommend using
+[haini.sh](https://0xacab.org/sutty/haini.sh).  It will install an
+Alpine 3.13 distribution on a subdirectory and install pre-built gems
+from <https://gems.sutty.nl/>.
+
+After installing `haini.sh`, run this command to install missing
+dependencies:
+
+```bash
+haini.sh apk add --no-cache pandoc tectonic poppler-utils
+```
+
+## Manual install
+
+Install dependencies using your package manager of choice.  If they
+provide too old versions (in comparison to the versions announced on
+their webpages), you may be missing features or experience broken
+builds, and you may need to install them via alternative sources
+(download the binary, build from source, etc.)
+
+We recommend [rbenv](https://github.com/rbenv/rbenv) and
+[ruby-build](https://github.com/rbenv/ruby-build) to prepare a Ruby 2.7
+environment.
+
+Some of the [gems](https://rubygems.org/) will need a working compiler
+and some of your CPU time.  Depending on your operating system
+distribution, you'll need to install development headers using your
+package manager.
+
+### Using Pacman package manager
+
+```bash
+# As root
+pacman -Sy base-devel
+```
+
+### Using APT package manager
+
+```bash
+# As root
+apt install build-essential
+```

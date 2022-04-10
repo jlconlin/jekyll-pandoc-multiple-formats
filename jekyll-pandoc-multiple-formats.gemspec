@@ -43,4 +43,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 1.25.0'
   spec.add_development_dependency 'rubocop-minitest', '~> 0.17.0'
   spec.add_development_dependency 'yard', '~> 0.9.0'
+
+  spec.add_development_dependency 'jekyll-order'
+  spec.add_development_dependency 'jekyll-locales'
+  spec.add_development_dependency 'jekyll-relative-urls'
+  spec.add_development_dependency 'jekyll-linked-posts'
+  spec.add_development_dependency 'sutty-liquid'
+  spec.add_development_dependency 'jekyll-seo-tag'
 end

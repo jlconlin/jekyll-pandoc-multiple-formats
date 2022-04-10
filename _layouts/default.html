@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <base href="{% base %}" />
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="theme-color" content="white"/>
+    <meta name="color-scheme" content="light"/>
+    <meta name="referrer" content="strict-origin-when-cross-origin"/>
+
+    <link href="assets/css/styles.css?{{ site.time | date: '%s' }}" rel="stylesheet">
+
+    {% comment %}
+      Because we're using relative URLs, we need to add a / to the site
+      URL, we capture and replace the SEO tag because it expects the URL
+      to not have a trailing /
+
+      TODO: Send a patch to jekyll-seo-tag
+    {% endcomment %}
+    {% capture seo %}
+      {% seo %}
+    {% endcapture %}
+
+    {{ seo | replace: '//', '/' | replace: 'https:/', 'https://' | replace: 'http:/', 'http://' }}
+
+    {% comment %}
+      Generate the alternate permalink for each page and locale.
+    {% endcomment %}
+    {% if page.collection == site.default_locale %}
+      <link
+        rel="alternate"
+        hreflang="x-default"
+        href="{{ page.url }}"
+        />
+    {% endif %}
+    {% for locale in page.lang %}
+      {% if locale.collection == site.default_locale %}
+        <link
+          rel="alternate"
+          hreflang="x-default"
+          href="../{{ locale.url }}"
+          />
+      {% endif %}
+      <link
+        rel="alternate"
+        hreflang="{{ locale.collection }}"
+        href="../{{ locale.url }}"
+        />
+    {% endfor %}
+  </head>
+  <body>
+    <main>
+      {{ content }}
+    </main>
+  </body>
+</html>
