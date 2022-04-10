@@ -7,6 +7,7 @@ require_relative 'jekyll/pandoc/generators/category'
 require_relative 'jekyll/pandoc/generators/site'
 require_relative 'jekyll/pandoc/generators/imposition'
 require_relative 'jekyll/pandoc/generators/binder'
+require_relative 'jekyll/pandoc/converter'
 
 # We modify the configuration post read, and not after init, because
 # Jekyll resets twice and any modification to config will invalidate the

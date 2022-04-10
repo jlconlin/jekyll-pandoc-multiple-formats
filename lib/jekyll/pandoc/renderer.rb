@@ -36,7 +36,8 @@ module Jekyll
           f.write content
         end
 
-        ParuHelper.from(from: 'markdown', to: type, **site.config['pandoc'].options[type], **extra) << content
+        ParuHelper.from(from: document.extname.sub('.', ''), to: type, **site.config['pandoc'].options[type],
+                        **extra) << content
       end
 
       # Don't convert Markdown to HTML, but do convert everything else
@@ -44,7 +45,7 @@ module Jekyll
       # @return [array]
       def converters
         @converters ||= super.reject do |c|
-          c.instance_of? Jekyll::Converters::Markdown
+          c.instance_of?(Jekyll::Converters::Markdown) || c.instance_of?(Jekyll::Pandoc::Converter)
         end
       end
 
